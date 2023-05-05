@@ -37,6 +37,8 @@ public final class ExplicitWaitFactory {
 	 * @return webelement Locates and return the webelement
 	 */
 	public static WebElement performExplicitWait(WaitStrategy waitstrategy, By by) {
+		new WebDriverWait(DriverManager.getDriver(), FrameworkConstants.getExplicitwait())
+				.until(ExpectedConditions.numberOfElementsToBeMoreThan(by,0));
 		WebElement element = null;
 		if(waitstrategy == WaitStrategy.CLICKABLE) {
 			element = 	new WebDriverWait(DriverManager.getDriver(), FrameworkConstants.getExplicitwait())
@@ -55,5 +57,4 @@ public final class ExplicitWaitFactory {
 		}
 		return element;
 	}
-
 }

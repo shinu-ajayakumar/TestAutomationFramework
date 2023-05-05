@@ -3,21 +3,16 @@
  */
 package com.tmb.factories;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-
+import com.tmb.enums.ConfigProperties;
+import com.tmb.utils.PropertyUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.remote.BrowserType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
-import com.tmb.driver.DriverManager;
-import com.tmb.enums.ConfigProperties;
-import com.tmb.utils.PropertyUtils;
-
-import io.github.bonigarcia.wdm.WebDriverManager;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 /**
  * Jan 26, 2021 
@@ -47,12 +42,13 @@ public final class DriverFactory {
 		if(browser.equalsIgnoreCase("chrome")) {
 			if(runmode.equalsIgnoreCase("remote")) {
 				DesiredCapabilities cap = new DesiredCapabilities();
-				cap.setBrowserName(BrowserType.CHROME);
+				//cap.setBrowserName(BrowserType.CHROME);
+				cap.setBrowserName(browser);
 				cap.setVersion(version);
 				driver =new RemoteWebDriver(new URL(PropertyUtils.get(ConfigProperties.SELENIUMGRIDURL)), cap);
 			}
 			else {
-				WebDriverManager.chromedriver().setup();
+				//WebDriverManager.chromedriver().setup();
 				driver = new ChromeDriver();
 			}
 		}
@@ -60,15 +56,15 @@ public final class DriverFactory {
 
 			if(runmode.equalsIgnoreCase("remote")) {
 				DesiredCapabilities cap = new DesiredCapabilities();
-				cap.setBrowserName(BrowserType.FIREFOX);
+				//cap.setBrowserName(BrowserType.FIREFOX);
+				cap.setBrowserName(browser);
 				cap.setVersion(version);
 				driver =new RemoteWebDriver(new URL(PropertyUtils.get(ConfigProperties.SELENIUMGRIDURL)), cap);
 			} else {
-				WebDriverManager.firefoxdriver().setup();
+				//WebDriverManager.firefoxdriver().setup();
 				driver = new FirefoxDriver();
 			}
 		}
 		return driver;
 	}
-
 }

@@ -21,24 +21,13 @@ SOFTWARE.
 
 package com.tmb.driver;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.Objects;
-
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.remote.BrowserType;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.RemoteWebDriver;
-
-import com.tmb.constants.FrameworkConstants;
 import com.tmb.enums.ConfigProperties;
 import com.tmb.exceptions.BrowserInvocationFailedException;
 import com.tmb.factories.DriverFactory;
 import com.tmb.utils.PropertyUtils;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
+import java.net.MalformedURLException;
+import java.util.Objects;
 
 /**
  * 
@@ -61,7 +50,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
  * @version 1.0
  * @since 1.0
  * @see DriverManager
- * @see com.tmb.tests.BaseTest
+ * @see com.tmb.tests
  */
 
 public final class Driver {
@@ -76,7 +65,7 @@ public final class Driver {
 	 * 
 	 * @author Amuthan Sakthivel
 	 * Jan 20, 2021
-	 * @param browser Value will be passed from {@link com.tmb.tests.BaseTest}. Values can be chrome and firefox
+	 * @param browser Value will be passed from {@link com.tmb.tests}. Values can be chrome and firefox
 	 * 
 	 */
 	public static void initDriver(String browser,String version)  {
@@ -85,11 +74,14 @@ public final class Driver {
 		if(Objects.isNull(DriverManager.getDriver())) {
 			try {
 				DriverManager.setDriver(DriverFactory.getDriver(browser,version));
-			
 			} catch (MalformedURLException e) {
+				Driver.quitDriver();
 				throw new BrowserInvocationFailedException("Please check the capabilities of browser");
 			}
-			DriverManager.getDriver().get(PropertyUtils.get(ConfigProperties.URL));
+			//maximizeWindow();
+			//DriverManager.getDriver().get(PropertyUtils.get(ConfigProperties.URL));
+			DriverManager.getDriver().navigate().to(PropertyUtils.get(ConfigProperties.URL));
+			//DriverManager.getDriver().manage().timeouts().pageLoadTimeout(FrameworkConstants.getExplicitwait(), TimeUnit.SECONDS);
 		}
 	}
 
@@ -105,5 +97,11 @@ public final class Driver {
 			DriverManager.unload();
 		}
 	}
+	public static String getPageTitle() {
+		return DriverManager.getDriver().getTitle();
+	}
 
+	public static void maximizeWindow(){
+		DriverManager.getDriver().manage().window().maximize();
+	}
 }

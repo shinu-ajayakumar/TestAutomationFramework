@@ -3,6 +3,8 @@ package com.tmb.constants;
 import com.tmb.enums.ConfigProperties;
 import com.tmb.utils.PropertyUtils;
 
+import java.time.Duration;
+
 /**
  * Framework Constants holds all the constant values used within the framework. If some value needs to be changed
  * or modified often, then it should be stored in the property files
@@ -26,7 +28,7 @@ public final class FrameworkConstants {
 	 */
 	private FrameworkConstants() {}
 	
-	private static final int EXPLICITWAIT = 10;
+	private static final int EXPLICITWAIT = 30;
 	private static final String RESOURCESPATH = System.getProperty("user.dir")+"/src/test/resources";
 	private static final String CHROMEDRIVERPATH = RESOURCESPATH+"/executables/chromedriver.exe";
 	private static final String GECKODRIVERPATH = RESOURCESPATH+"/executables/geckodriver.exe";
@@ -59,7 +61,7 @@ public final class FrameworkConstants {
 	 */
 	private static String createReportPath()  {
 		if(PropertyUtils.get(ConfigProperties.OVERRIDEREPORTS).equalsIgnoreCase("no")) {
-			return EXTENTREPORTFOLDERPATH+System.currentTimeMillis()+"/index.html";
+			return EXTENTREPORTFOLDERPATH+"SparkReport_"+System.currentTimeMillis()+".html";
 		}
 		else {
 			return EXTENTREPORTFOLDERPATH+"/index.html";
@@ -82,8 +84,8 @@ public final class FrameworkConstants {
 		return JSONCONFIGFILEPATH;
 	}
 
-	public static int getExplicitwait() {
-		return EXPLICITWAIT;
+	public static Duration getExplicitwait() {
+		return Duration.ofSeconds(EXPLICITWAIT);
 	}
 	
 	public static String getRunmangerDatasheet() {

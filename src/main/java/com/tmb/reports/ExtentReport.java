@@ -41,11 +41,12 @@ public final class ExtentReport {
 	public static void initReports() {
 		if(Objects.isNull(extent)) {
 			extent = new ExtentReports();
-			ExtentSparkReporter spark = new ExtentSparkReporter(FrameworkConstants.getExtentReportFilePath()); 
+			ExtentSparkReporter spark = new ExtentSparkReporter(FrameworkConstants.getExtentReportFilePath());
 			extent.attachReporter(spark);
-			spark.config().setTheme(Theme.STANDARD);
+			spark.config().setTheme(Theme.DARK);
 			spark.config().setDocumentTitle("TMB Report");
 			spark.config().setReportName("Youtube Training");
+			spark.config().setTimelineEnabled(true);
 		}
 	}
 
@@ -103,8 +104,4 @@ public final class ExtentReport {
 			ExtentManager.getExtentTest().assignCategory(temp.toString());
 		}
 	}
-
-
-
-
 }

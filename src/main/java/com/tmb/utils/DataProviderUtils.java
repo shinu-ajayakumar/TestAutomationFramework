@@ -48,13 +48,13 @@ public final class DataProviderUtils {
 	 * @see com.tmb.tests;
 	 * @see com.tmb.listeners.AnnotationTransformer
 	 */
-	@DataProvider(parallel=false)
+	@DataProvider(parallel=true)
 	public static Object[] getData(Method m) {
 		String testname = m.getName();
 
 		if(list.isEmpty()) {
 			list = ExcelUtils.getTestDetails(FrameworkConstants.getIterationDatasheet());
-			System.out.println(list);
+			//System.out.println(list);
 		}
 		List<Map<String, String>> smalllist = new ArrayList<>(list);
 

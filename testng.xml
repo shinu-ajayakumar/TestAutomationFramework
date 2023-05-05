@@ -9,8 +9,9 @@
 
   <test thread-count="1" name="Test" parallel="methods">
     <classes>
-      <class name="com.tmb.tests.OrangeHRMTests"/>
+      <!--<class name="com.tmb.tests.OrangeHRMTests"/>-->
        <class name="com.tmb.tests.AmazonDemoTest"/>
+        <!--<class name="com.vgc.tests.DPLandingPageTests"/>-->
     </classes>
   </test> <!-- Test -->
 </suite> <!-- Suite -->
