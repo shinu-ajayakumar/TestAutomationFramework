@@ -4,7 +4,7 @@ import com.tmb.pages.BasePage;
 
 import java.util.Arrays;
 
-public class DonorPortalOpenAccountPage extends BasePage {
+public class DPOpenAccountPage extends BasePage {
 
     private String labelHeader1 = "//div/h1";
     private String labelHeader3 = "//div/h3";
