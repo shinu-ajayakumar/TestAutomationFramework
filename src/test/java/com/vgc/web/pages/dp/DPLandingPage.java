@@ -1,4 +1,4 @@
-package com.vgc.pages.dp;
+package com.vgc.web.pages.dp;
 
 import com.tmb.enums.WaitStrategy;
 import com.tmb.pages.BasePage;

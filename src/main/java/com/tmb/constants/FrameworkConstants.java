@@ -22,7 +22,7 @@ import java.time.Duration;
  * @see com.tmb.utils.PropertyUtils
  */
 public final class FrameworkConstants {
-	
+
 	/**
 	 * Private constructor to avoid external instantiation
 	 */
@@ -39,7 +39,8 @@ public final class FrameworkConstants {
 	private static final String ITERATIONDATASHEET = "DATA";
 	private static final String EXTENTREPORTFOLDERPATH = System.getProperty("user.dir")+"/extent-test-output/";
 	private static String extentReportFilePath = "";
-	
+	private static final String ENDOFSTRING = "ENDOFTESTS";
+
 	/**
 	 * 
 	 * @author Amuthan Sakthivel
@@ -90,6 +91,10 @@ public final class FrameworkConstants {
 	
 	public static String getRunmangerDatasheet() {
 		return RUNMANGERSHEET;
+	}
+
+	public static String getEndOfTestString(){
+		return ENDOFSTRING;
 	}
 	
 	public static String getIterationDatasheet() {

@@ -1,6 +1,7 @@
 package com.tmb.listeners;
 
 import com.tmb.annotations.FrameworkAnnotation;
+import com.tmb.constants.FrameworkConstants;
 import com.tmb.reports.ExtentReport;
 import com.tmb.utils.ELKUtils;
 import org.testng.*;
@@ -59,6 +60,7 @@ public class ListenerClass implements ITestListener, ISuiteListener {
     @Override
     public void onTestStart(ITestResult result) {
         ExtentReport.createTest(result.getMethod().getDescription());
+        //FrameworkConstants.setCurrentTestName(result.getMethod().getMethodName());
         ExtentReport.addAuthors(result.getMethod().getConstructorOrMethod().getMethod().getAnnotation(FrameworkAnnotation.class)
                 .author());
         ExtentReport.addCategories(result.getMethod().getConstructorOrMethod().getMethod().getAnnotation(FrameworkAnnotation.class)

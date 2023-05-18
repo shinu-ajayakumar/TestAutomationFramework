@@ -48,8 +48,5 @@ public final class FrameworkLogger {
         else{
             SCREENSHOTMAP.getOrDefault(status,EXTENTANDCONSOLE).accept(message);
         }
-
-
     }
-
 }

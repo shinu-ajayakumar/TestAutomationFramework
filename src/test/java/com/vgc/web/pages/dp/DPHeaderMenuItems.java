@@ -1,4 +1,4 @@
-package com.vgc.pages.dp;
+package com.vgc.web.pages.dp;
 
 public enum DPHeaderMenuItems {
     ;

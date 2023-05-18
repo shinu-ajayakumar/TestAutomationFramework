@@ -11,7 +11,7 @@
         <classes>
             <class name="com.tmb.tests.OrangeHRMTests"/>
             <class name="com.tmb.tests.AmazonDemoTest"/>
-            <class name="com.vgc.tests.DPLandingPageTests"/>
+            <class name="com.vgc.web.tests.DPLandingPageTests"/>
         </classes>
     </test> <!-- Test -->
 </suite> <!-- Suite -->

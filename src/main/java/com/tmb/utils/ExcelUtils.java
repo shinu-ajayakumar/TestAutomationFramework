@@ -3,16 +3,18 @@ package com.tmb.utils;
 import com.tmb.constants.FrameworkConstants;
 import com.tmb.exceptions.FrameworkException;
 import com.tmb.exceptions.InvalidPathForExcelException;
+import com.tmb.reports.ExtentManager;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.*;
+import java.util.*;
+
+import static com.tmb.enums.LogType.*;
+import static com.tmb.enums.LogType.PASS;
+import static com.tmb.reports.FrameworkLogger.log;
 
 /**
  * Utility class to read or write to excel.
@@ -70,20 +72,28 @@ public final class ExcelUtils {
                     String key = "";
                     String value = "";
                     try {
-                        key = sheet.getRow(0).getCell(j).getStringCellValue().trim();
-                        value = sheet.getRow(i).getCell(j).getStringCellValue().trim();
-                        map.put(key, value);
+                        key = Objects.toString(new DataFormatter().formatCellValue(sheet.getRow(0).getCell(j)), "");
+                        value = Objects.toString(new DataFormatter().formatCellValue(sheet.getRow(i).getCell(j)), "");
+                        //System.out.println("Excel Data fetch : Key '" + key + "' , Value '" + value + "'");
+                        if (value.equalsIgnoreCase(FrameworkConstants.getEndOfTestString())) {
+                            isTestCaseCellEmpty = true;
+                            break;
+                        }
+                        if (StringUtils.isNotEmpty(key) && StringUtils.isNotEmpty(value)) {
+                            map.put(key, value);
+                        }
                     } catch (Exception e) {
                         if (key.equals("testname")) {
+                            e.printStackTrace();
                             isTestCaseCellEmpty = true;
                             break;
                         }
                     }
                 }
-                if(!isTestCaseCellEmpty) {
+                if (!isTestCaseCellEmpty) {
                     list.add(map);
                 }
-                if(isTestCaseCellEmpty) {
+                if (isTestCaseCellEmpty) {
                     break;
                 }
             }
@@ -99,4 +109,40 @@ public final class ExcelUtils {
     }
 
 
+    /*private static void writeTestData(String columnHeader, String valueToSave) {
+        try (FileInputStream fsio = new FileInputStream(FrameworkConstants.getExcelpath())) {
+            XSSFWorkbook workbook = new XSSFWorkbook(fsio);
+            XSSFSheet sheet = workbook.getSheet(FrameworkConstants.getIterationDatasheet());
+
+            int lastrownum = sheet.getLastRowNum();
+            int lastcolnum = sheet.getRow(0).getLastCellNum();
+            boolean isColumnHeaderExists = false;
+            for (int i = 0; i < lastcolnum; i++) {
+                if (columnHeader.trim().equals(Objects.toString(new DataFormatter().formatCellValue(sheet.getRow(0).getCell(i))))) {
+                    isColumnHeaderExists = true;
+                }
+            }
+            if (!isColumnHeaderExists) {
+                try {
+                    Cell cell = sheet.getRow(0).createCell(lastcolnum);
+                    cell.setCellValue(columnHeader);
+                    FileOutputStream outputStream = new FileOutputStream(FrameworkConstants.getExcelpath());
+                    workbook.write(outputStream);
+                    outputStream.close();
+                    log(INFO, "Excel : New column inserted : " + columnHeader);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            for (int i = 1; i <= lastrownum; i++) {
+                Cell cell = sheet.getRow(i).getCell(0);
+                String value = Objects.toString(new DataFormatter().formatCellValue(cell), "");
+                if (FrameworkConstants.getCurrentTestName().equalsIgnoreCase(value.trim())) {
+                    log(INFO, "Excel : New data '" + valueToSave + "' inserted in column '" + columnHeader + "'");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }*/
 }
